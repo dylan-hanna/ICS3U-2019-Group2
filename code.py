@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-# Created by: ????
-# Created on: ???? 2019
-# This file is the "????" game
+# Created by: Ben Lapuhapo
+# Created on: Jan 6 2020
+# This file is the "Jumpy Bread" game
 #   for CircuitPython
 
 import ugame
@@ -15,19 +15,8 @@ import random
 import constants
 
 
-def blank_white_reset_scene():
+def splash_scene():
     # this function is the splash scene game loop
-
-    # do house keeping to ensure everythng is setup
-
-    # set up the NeoPixels
-    pixels = neopixel.NeoPixel(board.NEOPIXEL, 5, auto_write=False)
-    pixels.deinit() # and turn them all off
-
-    # reset sound to be off
-    sound = ugame.audio
-    sound.stop()
-    sound.mute(False)
 
     # an image bank for CircuitPython
     image_bank_1 = stage.Bank.from_bmp16("mt_game_studio.bmp")
@@ -50,14 +39,14 @@ def blank_white_reset_scene():
 
         # update game logic
 
-        # Wait for 1/2 seconds
-        time.sleep(0.5)
-        mt_splash_scene()
+        # Wait for 1 seconds
+        time.sleep(1.0)
+        menu_scene()
 
         # redraw sprite list
 
-def mt_splash_scene():
-    # this function is the MT splash scene
+def menu_scene():
+    # this function is the menu scene
 
     # an image bank for CircuitPython
     image_bank_2 = stage.Bank.from_bmp16("mt_game_studio.bmp")
@@ -100,12 +89,11 @@ def mt_splash_scene():
     text1.move(20, 10)
     text1.text("MT Game Studios")
     text.append(text1)
-
+    
     text2 = stage.Text(width=29, height=14, font=None, palette=constants.MT_GAME_STUDIO_PALETTE, buffer=None)
     text2.move(35, 110)
-    text2.text("PRESS START")
+    text2.text("PRESS START!!")
     text.append(text2)
-
     # get sound ready
     # follow this guide to convert your other sounds to something that will work
     #    https://learn.adafruit.com/microcontroller-compatible-audio-file-conversion
@@ -129,64 +117,13 @@ def mt_splash_scene():
         # get user input
 
         # update game logic
+        keys = ugame.buttons.get_pressed()
+        #print(keys)
 
-        # Wait for 1 seconds
-        time.sleep(1.0)
-        game_splash_scene()
-
-        # redraw sprite list
-
-def game_splash_scene():
-    # this function is the game scene
-
-    # repeat forever, game loop
-    while True:
-        # get user input
-
-        # update game logic
+        if keys & ugame.K_START != 0:  # Start button
+            game_scene()
+            #break
 
         # redraw sprite list
-        pass # just a placeholder until you write the code
-
-
-def main_menu_scene():
-    # this function is the game scene
-
-    # repeat forever, game loop
-    while True:
-        # get user input
-
-        # update game logic
-
-        # redraw sprite list
-        pass # just a placeholder until you write the code
-
-
-def game_scene():
-    # this function is the game scene
-
-    # repeat forever, game loop
-    while True:
-        # get user input
-
-        # update game logic
-
-        # redraw sprite list
-        pass # just a placeholder until you write the code
-
-
-def game_over_scene(final_score):
-    # this function is the game over scene
-
-    # repeat forever, game loop
-    while True:
-        # get user input
-
-        # update game logic
-
-        # redraw sprite list
-        pass # just a placeholder until you write the code
-
-
 if __name__ == "__main__":
-    blank_white_reset_scene()
+    splash_scene()
